@@ -45,5 +45,5 @@ async fn main() {
     let ip = properties.get("ip").unwrap();
     let port = properties.get("port").unwrap().parse::<i32>().unwrap();
 
-    Tester::test_process_all(user, ip, port).await;
+    Tester::test_process_all_async(user, ip, port).await;
 }

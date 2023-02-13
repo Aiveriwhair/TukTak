@@ -36,6 +36,8 @@ impl<'a> Requester<'a> {
         match &self.session {
             None => return Err(io::Error::new(io::ErrorKind::Other, "No session")),
             Some(session) => {
+                // WARNING : shell function executes the commands from ~ location
+                // In other words, session does not keep track of the current directory
                 let out = session.shell(command).output().await;
                 match out {
                     Err(_e) => return Err(io::Error::new(io::ErrorKind::Other, "No session")),

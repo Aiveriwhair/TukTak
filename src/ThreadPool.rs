@@ -6,7 +6,7 @@ use std::thread;
 // Soure du code :
 // https://web.mi&t.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/book/second-edition/ch20-06-graceful-shutdown-and-cleanup.html
 
-// !!!!! CE THREAD POOL NE FONCTIONNE QUE POUR DES TACHES SYNCHRONES !!!!!
+// !!!!! ONLY WORKS FOR SYNC TASKS !!!!!
 
 /*
     Utilisation :
