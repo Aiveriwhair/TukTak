@@ -1,13 +1,13 @@
-use crate::ConnexionInfo::ConnexionInfo;
-use crate::SshRequester::Requester;
+use crate::tuktak::ConnexionInfo::ConnexionInfo;
+use crate::tuktak::SshRequester::Requester;
 use futures::future::join_all;
 use std::io;
 
-pub struct TukTak<'a> {
-    user_ip_port: &'a [ConnexionInfo<'a>],
+pub struct TukTak {
+    user_ip_port: Vec<ConnexionInfo>,
 }
-impl<'a> TukTak<'a> {
-    pub fn new(connexions: &'a [ConnexionInfo]) -> TukTak<'a> {
+impl TukTak {
+    pub fn new(connexions: Vec<ConnexionInfo>) -> TukTak {
         TukTak {
             user_ip_port: connexions,
         }
@@ -15,7 +15,7 @@ impl<'a> TukTak<'a> {
 }
 
 // TukTak threaded
-impl<'a> TukTak<'a> {
+impl TukTak {
     pub fn _process_all_threaded(
         &self,
         _command: String,
@@ -27,11 +27,11 @@ impl<'a> TukTak<'a> {
 }
 
 // TukTak with async functions, not threaded
-impl<'a> TukTak<'a> {
+impl TukTak {
     pub async fn process(
         &self,
         commands: Vec<String>,
-        connexion: &ConnexionInfo<'a>,
+        connexion: &ConnexionInfo,
         callback: fn(String) -> (),
     ) -> Result<(), io::Error> {
         let mut requester = Requester::new();
@@ -44,7 +44,7 @@ impl<'a> TukTak<'a> {
         for command in commands {
             let output = requester.make_request(&command).await;
             callback(format!(
-                "{:?}> {} > {}",
+                "{:?}> {} >\n{}",
                 connexion,
                 command,
                 output.unwrap()

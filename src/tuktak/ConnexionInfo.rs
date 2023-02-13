@@ -1,21 +1,21 @@
 #[derive(Clone, Debug)]
-pub struct ConnexionInfo<'a> {
-    user: &'a str,
-    ip: &'a str,
+pub struct ConnexionInfo {
+    user: String,
+    ip: String,
     port: i32,
 }
 
-impl<'a> ConnexionInfo<'a> {
-    pub fn new(user: &'a str, ip: &'a str, port: i32) -> ConnexionInfo<'a> {
+impl ConnexionInfo {
+    pub fn new(user: String, ip: String, port: i32) -> ConnexionInfo {
         ConnexionInfo { user, ip, port }
     }
     fn _debug_dump(&self) {
         println!("{:?}", self);
     }
-    fn _empty() -> ConnexionInfo<'a> {
+    fn _empty() -> ConnexionInfo {
         ConnexionInfo {
-            user: "",
-            ip: "",
+            user: "".to_string(),
+            ip: "".to_string(),
             port: -1,
         }
     }

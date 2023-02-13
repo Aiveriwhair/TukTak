@@ -1,10 +1,10 @@
-use crate::ConnexionInfo::ConnexionInfo;
+use crate::tuktak::ConnexionInfo::ConnexionInfo;
 use openssh::{KnownHosts, Session};
 use std::io::{self};
 
 pub struct Requester<'a> {
     session: Option<Session>,
-    curr_connexion_info: Option<&'a ConnexionInfo<'a>>,
+    curr_connexion_info: Option<&'a ConnexionInfo>,
 }
 
 // Implementation of async Requester
@@ -15,7 +15,7 @@ impl<'a> Requester<'a> {
             curr_connexion_info: None,
         }
     }
-    pub async fn connect(&mut self, infos: &'a ConnexionInfo<'a>) -> Result<(), io::Error> {
+    pub async fn connect(&mut self, infos: &'a ConnexionInfo) -> Result<(), io::Error> {
         let res = Session::connect(infos.ssh_format(), KnownHosts::Strict).await;
         match res {
             Err(_e) => {
