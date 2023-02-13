@@ -1,12 +1,24 @@
-use std::fs::File;
-use std::io::{self, BufRead};
+use std::fs::{File, OpenOptions};
+use std::io::{self, BufRead, Write};
 use std::path::Path;
 
 use crate::tuktak::ConnexionInfo::ConnexionInfo;
 use crate::tuktak::TukTak::TukTak;
 
 fn treat_output(output: String) {
-    println!("{}", output);
+    write_output(output);
+}
+
+fn write_output(output: String) {
+    let mut file = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open("output.log")
+        .unwrap();
+
+    if let Err(e) = writeln!(file, "{}", output) {
+        eprintln!("Couldn't write to file: {}", e);
+    }
 }
 
 // The output is wrapped in a Result to allow matching on errors
